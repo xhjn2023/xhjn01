@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>待办事项</title>
+    <link rel="stylesheet" href="todo.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 头部 -->
+        <header class="header">
+            <h1>📋 我的待办</h1>
+            <div class="header-stats">
+                <span id="task-count">0 项任务</span>
+            </div>
+        </header>
+
+        <!-- 输入区域 -->
+        <div class="input-section">
+            <input type="text" id="task-input" class="task-input" placeholder="添加新任务...">
+            <button id="add-btn" class="btn btn-primary">添加</button>
+        </div>
+
+        <!-- 筛选选项 -->
+        <div class="filter-section">
+            <button class="filter-btn active" data-filter="all">全部</button>
+            <button class="filter-btn" data-filter="pending">待完成</button>
+            <button class="filter-btn" data-filter="completed">已完成</button>
+        </div>
+
+        <!-- 任务列表 -->
+        <div class="task-list" id="task-list">
+            <div class="empty-state">
+                <p>暂无待办任务</p>
+                <p class="empty-hint">添加新任务开始吧！</p>
+            </div>
+        </div>
+
+        <!-- 底部操作栏 -->
+        <div class="footer-actions" id="footer-actions" style="display: none;">
+            <span id="remaining-count">0 项待完成</span>
+            <button id="clear-completed" class="btn btn-text">清除已完成</button>
+        </div>
+    </div>
+
+    <script src="todo.js"></script>
+</body>
+</html>
