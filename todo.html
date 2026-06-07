@@ -7,12 +7,32 @@
     <link rel="stylesheet" href="todo.css">
 </head>
 <body>
-    <div class="app-container">
+    <!-- 登录模态框 -->
+    <div id="login-modal" class="modal show">
+        <div class="modal-content login-modal-content">
+            <h2>欢迎使用待办事项</h2>
+            <p class="login-hint">请输入您的用户名开始使用</p>
+            <div class="login-form">
+                <input type="text" id="username-input" class="task-input" placeholder="输入用户名..." maxlength="20">
+                <button id="login-btn" class="btn btn-primary">进入</button>
+            </div>
+            <div id="user-list-section">
+                <p class="login-hint">或选择已有用户：</p>
+                <div id="user-list" class="user-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-container" id="app-container" style="display: none;">
         <!-- 头部 -->
         <header class="header">
-            <h1>📋 我的待办</h1>
-            <div class="header-stats">
+            <div class="header-left">
+                <h1>📋 我的待办</h1>
+                <span id="welcome-user" class="welcome-user"></span>
+            </div>
+            <div class="header-right">
                 <span id="task-count">0 项任务</span>
+                <button id="switch-user" class="btn btn-text">切换用户</button>
             </div>
         </header>
 
