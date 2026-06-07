@@ -14,11 +14,11 @@ body {
 
 /* 应用容器 */
 .app-container {
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
     background: rgba(255, 255, 255, 0.95);
     border-radius: 16px;
-    padding: 30px;
+    padding: 25px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
 }
 
@@ -27,36 +27,49 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .header h1 {
     color: #333;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 600;
 }
 
-.header-stats {
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.welcome-user {
     background: rgba(17, 153, 142, 0.1);
     color: #11998e;
-    padding: 6px 14px;
+    padding: 5px 12px;
     border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-size: 0.85rem;
 }
 
 /* 输入区域 */
 .input-section {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 8px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
 }
 
 .task-input {
     flex: 1;
-    padding: 14px 18px;
+    min-width: 200px;
+    padding: 12px 14px;
     border: 2px solid #e0e0e0;
-    border-radius: 10px;
+    border-radius: 8px;
     font-size: 1rem;
     outline: none;
     transition: border-color 0.3s;
@@ -70,11 +83,41 @@ body {
     color: #aaa;
 }
 
+/* 日期输入 */
+.date-input-small {
+    padding: 12px 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s;
+    cursor: pointer;
+}
+
+.date-input-small:focus {
+    border-color: #11998e;
+}
+
+.date-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+    cursor: pointer;
+}
+
+.date-input:focus {
+    border-color: #11998e;
+}
+
 /* 按钮样式 */
 .btn {
-    padding: 12px 24px;
+    padding: 12px 20px;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
@@ -91,43 +134,142 @@ body {
     box-shadow: 0 4px 15px rgba(17, 153, 142, 0.4);
 }
 
+.btn-secondary {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background: #d0d0d0;
+}
+
 .btn-text {
     background: none;
     color: #999;
-    padding: 6px 12px;
+    padding: 5px 10px;
 }
 
 .btn-text:hover {
     color: #dc3545;
 }
 
-/* 筛选区域 */
-.filter-section {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #f0f0f0;
+.btn-text-small {
+    background: none;
+    color: #11998e;
+    padding: 8px 12px;
+    font-size: 0.85rem;
 }
 
-.filter-btn {
-    padding: 8px 16px;
+.btn-text-small:hover {
+    color: #0d7a6e;
+}
+
+/* 快捷筛选区域 */
+.quick-filter-section {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.quick-filter-btn {
+    padding: 6px 12px;
     border: none;
     background: #f5f5f5;
-    border-radius: 20px;
-    font-size: 0.9rem;
+    border-radius: 16px;
+    font-size: 0.85rem;
     cursor: pointer;
     transition: all 0.3s;
     color: #666;
 }
 
-.filter-btn:hover {
+.quick-filter-btn:hover {
     background: #e8e8e8;
 }
 
-.filter-btn.active {
+.quick-filter-btn.active {
     background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
     color: white;
+}
+
+/* 排序区域 */
+.sort-section {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.sort-group, .date-filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sort-group label, .date-filter-group label {
+    color: #666;
+    font-size: 0.85rem;
+}
+
+.sort-select {
+    padding: 8px 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    outline: none;
+    cursor: pointer;
+    background: white;
+}
+
+.sort-select:focus {
+    border-color: #11998e;
+}
+
+/* 统计区域 */
+.stats-section {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    background: #f8f9fa;
+    padding: 10px 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+}
+
+.stat-item.overdue {
+    background: rgba(220, 53, 69, 0.1);
+}
+
+.stat-item.completed {
+    background: rgba(56, 239, 125, 0.1);
+}
+
+.stat-label {
+    color: #888;
+    font-size: 0.75rem;
+    margin-bottom: 4px;
+}
+
+.stat-value {
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.stat-item.overdue .stat-value {
+    color: #dc3545;
+}
+
+.stat-item.completed .stat-value {
+    color: #38ef7d;
 }
 
 /* 任务列表 */
@@ -138,7 +280,7 @@ body {
 /* 空状态 */
 .empty-state {
     text-align: center;
-    padding: 50px 20px;
+    padding: 40px 20px;
     color: #999;
 }
 
@@ -150,7 +292,7 @@ body {
 /* 任务项 */
 .task-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 12px;
     padding: 15px;
     background: #f8f9fa;
@@ -158,6 +300,7 @@ body {
     margin-bottom: 10px;
     transition: all 0.3s;
     animation: fadeIn 0.3s ease-out;
+    border-left: 4px solid transparent;
 }
 
 @keyframes fadeIn {
@@ -177,6 +320,16 @@ body {
 
 .task-item.completed {
     background: rgba(56, 239, 125, 0.1);
+    border-left-color: #38ef7d;
+}
+
+.task-item.overdue {
+    background: rgba(220, 53, 69, 0.05);
+    border-left-color: #dc3545;
+}
+
+.task-item.today {
+    border-left-color: #11998e;
 }
 
 .task-item.completed .task-text {
@@ -196,6 +349,7 @@ body {
     justify-content: center;
     transition: all 0.3s;
     flex-shrink: 0;
+    margin-top: 2px;
 }
 
 .task-checkbox:hover {
@@ -214,34 +368,97 @@ body {
     font-weight: bold;
 }
 
-/* 任务文本 */
-.task-text {
+/* 任务内容区域 */
+.task-content {
     flex: 1;
+    min-width: 0;
+}
+
+.task-text {
     font-size: 1rem;
     color: #333;
     word-break: break-word;
+    margin-bottom: 6px;
 }
 
-/* 删除按钮 */
-.task-delete {
-    width: 30px;
-    height: 30px;
+/* 任务日期信息 */
+.task-dates {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-size: 0.75rem;
+    color: #888;
+}
+
+.task-date-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.task-date-item.overdue {
+    color: #dc3545;
+}
+
+.task-date-item.today {
+    color: #11998e;
+}
+
+.task-date-item .date-icon {
+    font-size: 0.7rem;
+}
+
+/* 提醒图标 */
+.task-reminder-icon {
+    color: #ffc107;
+    margin-left: 4px;
+}
+
+/* 任务操作按钮 */
+.task-actions {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.task-edit, .task-delete {
+    width: 28px;
+    height: 28px;
     border: none;
     background: transparent;
     color: #ccc;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1rem;
     transition: all 0.3s;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
+}
+
+.task-edit:hover {
+    background: rgba(17, 153, 142, 0.1);
+    color: #11998e;
 }
 
 .task-delete:hover {
     background: rgba(220, 53, 69, 0.1);
     color: #dc3545;
+}
+
+/* 底部操作栏 */
+.footer-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+    margin-top: 15px;
+}
+
+#remaining-count {
+    color: #666;
+    font-size: 0.9rem;
 }
 
 /* 模态框 */
@@ -265,7 +482,7 @@ body {
 .modal-content {
     background: white;
     border-radius: 16px;
-    padding: 30px;
+    padding: 25px;
     max-width: 400px;
     width: 90%;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
@@ -279,19 +496,19 @@ body {
 .login-modal-content h2 {
     color: #333;
     margin-bottom: 10px;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
 }
 
 .login-hint {
     color: #888;
-    margin-bottom: 15px;
-    font-size: 0.9rem;
+    margin-bottom: 12px;
+    font-size: 0.85rem;
 }
 
 .login-form {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 8px;
+    margin-bottom: 15px;
 }
 
 .login-form .task-input {
@@ -301,18 +518,18 @@ body {
 .user-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
     justify-content: center;
 }
 
 .user-item {
-    padding: 8px 16px;
+    padding: 6px 14px;
     background: #f5f5f5;
     border: 2px solid transparent;
-    border-radius: 20px;
+    border-radius: 16px;
     cursor: pointer;
     transition: all 0.3s;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: #666;
 }
 
@@ -321,31 +538,35 @@ body {
     background: #e8f5f4;
 }
 
-/* 欢迎用户 */
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+/* 编辑模态框 */
+.edit-modal-content h3 {
+    color: #333;
+    margin-bottom: 15px;
 }
 
-.header-right {
+.edit-form {
     display: flex;
-    align-items: center;
-    gap: 15px;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
 }
 
-.welcome-user {
-    background: rgba(17, 153, 142, 0.1);
-    color: #11998e;
-    padding: 6px 14px;
-    border-radius: 20px;
+.edit-form label {
+    color: #666;
     font-size: 0.85rem;
+    margin-bottom: 4px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
 /* 响应式设计 */
 @media (max-width: 480px) {
     .app-container {
-        padding: 20px;
+        padding: 15px;
     }
     
     .header {
@@ -355,19 +576,45 @@ body {
     }
     
     .header h1 {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
     }
     
     .input-section {
         flex-direction: column;
     }
     
-    .btn-primary {
+    .input-section .btn-primary {
         width: 100%;
     }
     
-    .filter-section {
+    .date-input-small {
+        width: 100%;
+    }
+    
+    .quick-filter-section {
         justify-content: center;
+    }
+    
+    .sort-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .sort-group, .date-filter-group {
+        justify-content: space-between;
+    }
+    
+    .stats-section {
+        justify-content: center;
+    }
+    
+    .stat-item {
+        min-width: 70px;
+    }
+    
+    .task-dates {
+        flex-direction: column;
+        gap: 4px;
     }
 }
 
@@ -387,4 +634,53 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #aaa;
+}
+
+/* 提醒弹窗 */
+.reminder-popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(255, 152, 0, 0.4);
+    z-index: 2000;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.reminder-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.reminder-icon {
+    font-size: 1.5rem;
+}
+
+.reminder-text {
+    font-size: 0.9rem;
+    max-width: 200px;
+}
+
+.reminder-close {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
 }

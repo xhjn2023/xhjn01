@@ -52,18 +52,85 @@ app.get('/api/users', (req, res) => {
     res.json({ success: true, data: users });
 });
 
-// 获取指定用户的所有任务
+// 获取指定用户的所有任务（支持筛选和排序）
 app.get('/api/todos/:username', (req, res) => {
     const { username } = req.params;
+    const { sortBy, filterBy, date } = req.query;
+    
     const data = readData();
-    const userTodos = data[username] || [];
+    let userTodos = data[username] || [];
+    
+    // 筛选
+    if (filterBy) {
+        const today = new Date().toISOString().split('T')[0];
+        switch (filterBy) {
+            case 'today':
+                userTodos = userTodos.filter(t => t.dueDate === today);
+                break;
+            case 'overdue':
+                userTodos = userTodos.filter(t => 
+                    !t.completed && t.dueDate && t.dueDate < today
+                );
+                break;
+            case 'upcoming':
+                userTodos = userTodos.filter(t => 
+                    !t.completed && t.dueDate && t.dueDate > today
+                );
+                break;
+            case 'completed':
+                userTodos = userTodos.filter(t => t.completed);
+                break;
+            case 'pending':
+                userTodos = userTodos.filter(t => !t.completed);
+                break;
+            case 'date':
+                if (date) {
+                    userTodos = userTodos.filter(t => t.dueDate === date);
+                }
+                break;
+        }
+    }
+    
+    // 排序
+    if (sortBy) {
+        switch (sortBy) {
+            case 'dueDate':
+                userTodos.sort((a, b) => {
+                    if (!a.dueDate) return 1;
+                    if (!b.dueDate) return -1;
+                    return new Date(a.dueDate) - new Date(b.dueDate);
+                });
+                break;
+            case 'dueDateDesc':
+                userTodos.sort((a, b) => {
+                    if (!a.dueDate) return 1;
+                    if (!b.dueDate) return -1;
+                    return new Date(b.dueDate) - new Date(a.dueDate);
+                });
+                break;
+            case 'createdAt':
+                userTodos.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                break;
+            case 'createdAtAsc':
+                userTodos.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+                break;
+            case 'completedAt':
+                userTodos.sort((a, b) => {
+                    if (!a.completedAt) return 1;
+                    if (!b.completedAt) return -1;
+                    return new Date(b.completedAt) - new Date(a.completedAt);
+                });
+                break;
+        }
+    }
+    
     res.json({ success: true, data: userTodos });
 });
 
-// 添加新任务
+// 添加新任务（支持日期和提醒）
 app.post('/api/todos/:username', (req, res) => {
     const { username } = req.params;
-    const { text } = req.body;
+    const { text, dueDate, reminder } = req.body;
     
     if (!text || !text.trim()) {
         return res.status(400).json({ success: false, message: '任务内容不能为空' });
@@ -78,7 +145,10 @@ app.post('/api/todos/:username', (req, res) => {
         id: Date.now(),
         text: text.trim(),
         completed: false,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        dueDate: dueDate || null,
+        reminder: reminder || null,
+        completedAt: null
     };
     
     data[username].unshift(newTask);
@@ -90,10 +160,10 @@ app.post('/api/todos/:username', (req, res) => {
     }
 });
 
-// 更新任务状态
+// 更新任务（支持更新日期、提醒和状态）
 app.put('/api/todos/:username/:taskId', (req, res) => {
     const { username, taskId } = req.params;
-    const { completed } = req.body;
+    const { completed, dueDate, reminder, text } = req.body;
     
     const data = readData();
     if (!data[username]) {
@@ -105,7 +175,27 @@ app.put('/api/todos/:username/:taskId', (req, res) => {
         return res.status(404).json({ success: false, message: '任务不存在' });
     }
     
-    task.completed = completed;
+    // 更新字段
+    if (completed !== undefined) {
+        task.completed = completed;
+        if (completed) {
+            task.completedAt = new Date().toISOString();
+        } else {
+            task.completedAt = null;
+        }
+    }
+    
+    if (dueDate !== undefined) {
+        task.dueDate = dueDate || null;
+    }
+    
+    if (reminder !== undefined) {
+        task.reminder = reminder || null;
+    }
+    
+    if (text !== undefined) {
+        task.text = text.trim();
+    }
     
     if (saveData(data)) {
         res.json({ success: true, data: task });

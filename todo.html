@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>待办事项</title>
+    <title>待办事项 - 增强版</title>
     <link rel="stylesheet" href="todo.css">
 </head>
 <body>
@@ -19,6 +19,27 @@
             <div id="user-list-section">
                 <p class="login-hint">或选择已有用户：</p>
                 <div id="user-list" class="user-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 编辑任务模态框 -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content edit-modal-content">
+            <h3>编辑任务</h3>
+            <div class="edit-form">
+                <label>任务内容</label>
+                <input type="text" id="edit-text" class="task-input" placeholder="任务内容...">
+                
+                <label>计划完成日期</label>
+                <input type="date" id="edit-due-date" class="date-input">
+                
+                <label>提醒时间</label>
+                <input type="datetime-local" id="edit-reminder" class="date-input">
+            </div>
+            <div class="modal-actions">
+                <button id="save-edit" class="btn btn-primary">保存</button>
+                <button id="cancel-edit" class="btn btn-secondary">取消</button>
             </div>
         </div>
     </div>
@@ -39,14 +60,56 @@
         <!-- 输入区域 -->
         <div class="input-section">
             <input type="text" id="task-input" class="task-input" placeholder="添加新任务...">
+            <input type="date" id="due-date-input" class="date-input-small" title="计划完成日期">
             <button id="add-btn" class="btn btn-primary">添加</button>
         </div>
 
-        <!-- 筛选选项 -->
-        <div class="filter-section">
-            <button class="filter-btn active" data-filter="all">全部</button>
-            <button class="filter-btn" data-filter="pending">待完成</button>
-            <button class="filter-btn" data-filter="completed">已完成</button>
+        <!-- 快捷筛选 -->
+        <div class="quick-filter-section">
+            <button class="quick-filter-btn active" data-filter="all">全部</button>
+            <button class="quick-filter-btn" data-filter="today">今日</button>
+            <button class="quick-filter-btn" data-filter="overdue">逾期</button>
+            <button class="quick-filter-btn" data-filter="upcoming">即将到期</button>
+            <button class="quick-filter-btn" data-filter="pending">待完成</button>
+            <button class="quick-filter-btn" data-filter="completed">已完成</button>
+        </div>
+
+        <!-- 排序和日期筛选 -->
+        <div class="sort-section">
+            <div class="sort-group">
+                <label>排序：</label>
+                <select id="sort-select" class="sort-select">
+                    <option value="createdAt">创建时间（最新）</option>
+                    <option value="dueDate">到期日期（升序）</option>
+                    <option value="dueDateDesc">到期日期（降序）</option>
+                    <option value="completedAt">完成时间</option>
+                </select>
+            </div>
+            <div class="date-filter-group">
+                <label>日期：</label>
+                <input type="date" id="date-filter-input" class="date-input-small">
+                <button id="clear-date-filter" class="btn btn-text-small">清除</button>
+            </div>
+        </div>
+
+        <!-- 统计信息 -->
+        <div class="stats-section">
+            <div class="stat-item">
+                <span class="stat-label">今日任务</span>
+                <span id="today-count" class="stat-value">0</span>
+            </div>
+            <div class="stat-item overdue">
+                <span class="stat-label">逾期任务</span>
+                <span id="overdue-count" class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">待完成</span>
+                <span id="pending-count" class="stat-value">0</span>
+            </div>
+            <div class="stat-item completed">
+                <span class="stat-label">已完成</span>
+                <span id="completed-count" class="stat-value">0</span>
+            </div>
         </div>
 
         <!-- 任务列表 -->
