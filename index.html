@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的日记</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 头部 -->
+        <header class="header">
+            <h1>📔 我的日记</h1>
+            <div class="header-info">
+                <span id="auto-save-status" class="auto-save">✓ 已保存</span>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- 左侧：编辑器区域 -->
+            <div class="editor-section">
+                <!-- 日期选择器 -->
+                <div class="date-section">
+                    <label for="date-picker">选择日期：</label>
+                    <input type="date" id="date-picker" class="date-picker">
+                    <button id="today-btn" class="btn btn-secondary">今天</button>
+                </div>
+
+                <!-- 格式化工具栏 -->
+                <div class="toolbar" id="toolbar">
+                    <button class="toolbar-btn" onclick="formatText('bold')" title="粗体">
+                        <strong>B</strong>
+                    </button>
+                    <button class="toolbar-btn" onclick="formatText('italic')" title="斜体">
+                        <em>I</em>
+                    </button>
+                    <button class="toolbar-btn" onclick="formatText('underline')" title="下划线">
+                        <u>U</u>
+                    </button>
+                    <button class="toolbar-btn" onclick="formatText('strikeThrough')" title="删除线">
+                        <s>S</s>
+                    </button>
+                    <div class="toolbar-divider"></div>
+                    <button class="toolbar-btn" onclick="formatText('insertUnorderedList')" title="无序列表">
+                        ☰
+                    </button>
+                    <button class="toolbar-btn" onclick="formatText('insertOrderedList')" title="有序列表">
+                        ≡
+                    </button>
+                    <div class="toolbar-divider"></div>
+                    <button class="toolbar-btn" onclick="formatText('justifyLeft')" title="左对齐">
+                        ⌈
+                    </button>
+                    <button class="toolbar-btn" onclick="formatText('justifyCenter')" title="居中">
+                        ⌉
+                    </button>
+                    <button class="toolbar-btn" onclick="formatText('justifyRight')" title="右对齐">
+                        ⌊
+                    </button>
+                    <button class="toolbar-btn" onclick="formatText('justifyFull')" title="两端对齐">
+                        ⌋
+                    </button>
+                    <div class="toolbar-divider"></div>
+                    <button class="toolbar-btn" onclick="formatText('undo')" title="撤销">
+                        ↩
+                    </button>
+                    <button class="toolbar-btn" onclick="formatText('redo')" title="重做">
+                        ↪
+                    </button>
+                </div>
+
+                <!-- 富文本编辑器 -->
+                <div class="editor-wrapper">
+                    <div id="editor" contenteditable="true" class="editor" placeholder="开始写日记..."></div>
+                </div>
+
+                <!-- 操作按钮 -->
+                <div class="actions">
+                    <button id="save-btn" class="btn btn-primary">保存日记</button>
+                    <button id="clear-btn" class="btn btn-danger">清空内容</button>
+                </div>
+            </div>
+
+            <!-- 右侧：历史记录 -->
+            <div class="history-section">
+                <h2>📜 历史记录</h2>
+                <div id="history-list" class="history-list">
+                    <div class="empty-state">
+                        <p>暂无日记记录</p>
+                        <p class="empty-hint">选择日期并开始写日记吧！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部 -->
+        <footer class="footer">
+            <p>日记数据自动保存在本地浏览器中</p>
+        </footer>
+    </div>
+
+    <!-- 删除确认弹窗 -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <h3>确认删除</h3>
+            <p>确定要删除这篇日记吗？此操作无法撤销。</p>
+            <div class="modal-actions">
+                <button id="confirm-delete" class="btn btn-danger">删除</button>
+                <button id="cancel-delete" class="btn btn-secondary">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
