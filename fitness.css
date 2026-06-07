@@ -1,0 +1,694 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 0;
+}
+
+/* 应用容器 */
+.app-container {
+    max-width: 100%;
+    min-height: 100vh;
+    background: #f5f7fa;
+}
+
+/* 模态框 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 360px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* 登录模态框 */
+.auth-modal-content {
+    text-align: center;
+}
+
+.auth-header {
+    margin-bottom: 25px;
+}
+
+.auth-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.auth-header h2 {
+    color: #333;
+    font-size: 1.5rem;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.auth-input {
+    padding: 14px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.auth-input:focus {
+    border-color: #667eea;
+}
+
+.auth-switch {
+    color: #888;
+    font-size: 0.85rem;
+    margin-top: 10px;
+}
+
+.auth-switch a {
+    color: #667eea;
+    text-decoration: none;
+}
+
+/* 按钮样式 */
+.btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background: #d0d0d0;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #c82333;
+}
+
+.btn-text {
+    background: none;
+    color: #888;
+    padding: 5px 10px;
+}
+
+.btn-text:hover {
+    color: #667eea;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+/* 头部 */
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-icon {
+    font-size: 1.5rem;
+}
+
+.header h1 {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-right .btn-text {
+    color: white;
+}
+
+.user-name {
+    font-size: 0.85rem;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 12px;
+    border-radius: 15px;
+}
+
+/* 导航标签 */
+.nav-tabs {
+    display: flex;
+    background: white;
+    padding: 10px 15px;
+    gap: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.nav-tab {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: #f5f5f5;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.nav-tab.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+/* 页面 */
+.page {
+    display: none;
+    padding: 15px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 区块 */
+.section {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+    color: #333;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+/* 健身项目网格 */
+.sport-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.sport-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 8px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.sport-item:hover {
+    background: #f0f5ff;
+}
+
+.sport-item.selected {
+    border-color: #667eea;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+}
+
+.sport-icon {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.sport-name {
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.sport-item.selected .sport-name {
+    color: #667eea;
+    font-weight: 500;
+}
+
+/* 已选择项目 */
+.selected-sport {
+    color: #888;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+}
+
+.selected-sport.has-sport {
+    color: #667eea;
+    font-weight: 500;
+}
+
+/* 计时器 */
+.timer-section {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.timer-display {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #333;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 20px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.timer-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* 手动输入 */
+.manual-input-section {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+.input-title {
+    color: #666;
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+}
+
+.duration-input-group {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.duration-input-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.duration-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    text-align: center;
+    outline: none;
+}
+
+.duration-input:focus {
+    border-color: #667eea;
+}
+
+.duration-label {
+    color: #888;
+    font-size: 0.75rem;
+    margin-top: 5px;
+}
+
+/* 今日概览 */
+.today-summary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.today-summary .section-title {
+    color: white;
+}
+
+.summary-stats {
+    display: flex;
+    justify-content: space-around;
+}
+
+.summary-item {
+    text-align: center;
+}
+
+.summary-value {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.summary-label {
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+
+/* 筛选栏 */
+.filter-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.filter-select {
+    padding: 10px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    background: white;
+    outline: none;
+}
+
+.date-input {
+    padding: 10px 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    outline: none;
+}
+
+/* 历史记录列表 */
+.history-list {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.history-item {
+    background: white;
+    border-radius: 10px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.history-item-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.history-sport-icon {
+    font-size: 1.5rem;
+}
+
+.history-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.history-sport-name {
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.history-date {
+    font-size: 0.75rem;
+    color: #888;
+}
+
+.history-duration {
+    font-size: 1rem;
+    color: #667eea;
+    font-weight: 600;
+}
+
+.history-delete {
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.history-delete:hover {
+    color: #dc3545;
+}
+
+/* 空状态 */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #999;
+}
+
+.empty-hint {
+    font-size: 0.85rem;
+    margin-top: 8px;
+}
+
+/* 统计周期选择 */
+.stats-period-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.period-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: white;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.period-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+/* 统计卡片 */
+.stats-summary {
+    display: flex;
+    gap: 10px;
+}
+
+.stats-card {
+    flex: 1;
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.stats-icon {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+}
+
+.stats-info {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 3px;
+}
+
+.stats-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #667eea;
+}
+
+.stats-unit {
+    font-size: 0.75rem;
+    color: #888;
+}
+
+.stats-label {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 5px;
+}
+
+/* 图表容器 */
+.chart-container {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 15px;
+    height: 200px;
+}
+
+/* 导出选项 */
+.export-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.export-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.export-icon {
+    font-size: 1.5rem;
+}
+
+.export-name {
+    flex: 1;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.export-range {
+    margin-top: 15px;
+}
+
+.export-range h4 {
+    color: #666;
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+}
+
+.range-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.range-inputs label {
+    color: #888;
+    font-size: 0.75rem;
+}
+
+/* 数据管理 */
+.data-actions {
+    margin-top: 10px;
+}
+
+/* 响应式设计 */
+@media (max-width: 360px) {
+    .sport-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .timer-display {
+        font-size: 2rem;
+    }
+    
+    .summary-value {
+        font-size: 1.5rem;
+    }
+    
+    .stats-card {
+        padding: 10px;
+    }
+    
+    .stats-value {
+        font-size: 1.2rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .app-container {
+        max-width: 500px;
+        margin: 0 auto;
+        min-height: auto;
+        border-radius: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    body {
+        padding: 20px;
+    }
+    
+    .sport-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .chart-container {
+        height: 250px;
+    }
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}

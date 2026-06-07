@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>健身时长记录</title>
+    <link rel="stylesheet" href="fitness.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- 登录/注册模态框 -->
+    <div id="auth-modal" class="modal show">
+        <div class="modal-content auth-modal-content">
+            <div class="auth-header">
+                <span class="auth-icon">💪</span>
+                <h2>健身时长记录</h2>
+            </div>
+            
+            <!-- 登录表单 -->
+            <div id="login-form" class="auth-form">
+                <input type="text" id="login-username" class="auth-input" placeholder="用户名" maxlength="20">
+                <input type="password" id="login-password" class="auth-input" placeholder="密码" maxlength="20">
+                <button id="login-btn" class="btn btn-primary btn-full">登录</button>
+                <p class="auth-switch">没有账号？<a href="#" id="switch-to-register">立即注册</a></p>
+            </div>
+            
+            <!-- 注册表单 -->
+            <div id="register-form" class="auth-form" style="display: none;">
+                <input type="text" id="register-username" class="auth-input" placeholder="用户名" maxlength="20">
+                <input type="password" id="register-password" class="auth-input" placeholder="密码" maxlength="20">
+                <input type="password" id="register-password2" class="auth-input" placeholder="确认密码" maxlength="20">
+                <button id="register-btn" class="btn btn-primary btn-full">注册</button>
+                <p class="auth-switch">已有账号？<a href="#" id="switch-to-login">立即登录</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主应用容器 -->
+    <div id="app-container" class="app-container" style="display: none;">
+        <!-- 头部 -->
+        <header class="header">
+            <div class="header-left">
+                <span class="header-icon">💪</span>
+                <h1>健身记录</h1>
+            </div>
+            <div class="header-right">
+                <span id="user-name" class="user-name"></span>
+                <button id="logout-btn" class="btn btn-text">退出</button>
+            </div>
+        </header>
+
+        <!-- 导航标签 -->
+        <nav class="nav-tabs">
+            <button class="nav-tab active" data-tab="record">记录</button>
+            <button class="nav-tab" data-tab="history">历史</button>
+            <button class="nav-tab" data-tab="stats">统计</button>
+            <button class="nav-tab" data-tab="export">导出</button>
+        </nav>
+
+        <!-- 记录页面 -->
+        <div id="record-page" class="page active">
+            <!-- 健身项目选择 -->
+            <section class="section">
+                <h3 class="section-title">选择健身项目</h3>
+                <div class="sport-grid">
+                    <div class="sport-item" data-sport="running">
+                        <span class="sport-icon">🏃</span>
+                        <span class="sport-name">跑步</span>
+                    </div>
+                    <div class="sport-item" data-sport="swimming">
+                        <span class="sport-icon">🏊</span>
+                        <span class="sport-name">游泳</span>
+                    </div>
+                    <div class="sport-item" data-sport="strength">
+                        <span class="sport-icon">🏋️</span>
+                        <span class="sport-name">力量训练</span>
+                    </div>
+                    <div class="sport-item" data-sport="cycling">
+                        <span class="sport-icon">🚴</span>
+                        <span class="sport-name">骑行</span>
+                    </div>
+                    <div class="sport-item" data-sport="yoga">
+                        <span class="sport-icon">🧘</span>
+                        <span class="sport-name">瑜伽</span>
+                    </div>
+                    <div class="sport-item" data-sport="basketball">
+                        <span class="sport-icon">🏀</span>
+                        <span class="sport-name">篮球</span>
+                    </div>
+                    <div class="sport-item" data-sport="football">
+                        <span class="sport-icon">⚽</span>
+                        <span class="sport-name">足球</span>
+                    </div>
+                    <div class="sport-item" data-sport="other">
+                        <span class="sport-icon">🎯</span>
+                        <span class="sport-name">其他</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 时长记录 -->
+            <section class="section">
+                <h3 class="section-title">记录时长</h3>
+                <p id="selected-sport" class="selected-sport">请先选择健身项目</p>
+                
+                <!-- 计时器 -->
+                <div class="timer-section">
+                    <div class="timer-display">
+                        <span id="timer-hours">00</span>:<span id="timer-minutes">00</span>:<span id="timer-seconds">00</span>
+                    </div>
+                    <div class="timer-controls">
+                        <button id="timer-start" class="btn btn-primary">开始计时</button>
+                        <button id="timer-pause" class="btn btn-secondary" style="display: none;">暂停</button>
+                        <button id="timer-stop" class="btn btn-danger" style="display: none;">结束</button>
+                    </div>
+                </div>
+
+                <!-- 手动输入 -->
+                <div class="manual-input-section">
+                    <h4 class="input-title">手动输入时长</h4>
+                    <div class="duration-input-group">
+                        <div class="duration-input-item">
+                            <input type="number" id="input-hours" class="duration-input" min="0" max="99" value="0">
+                            <span class="duration-label">小时</span>
+                        </div>
+                        <div class="duration-input-item">
+                            <input type="number" id="input-minutes" class="duration-input" min="0" max="59" value="0">
+                            <span class="duration-label">分钟</span>
+                        </div>
+                    </div>
+                    <button id="manual-save" class="btn btn-primary btn-full">保存记录</button>
+                </div>
+            </section>
+
+            <!-- 今日概览 -->
+            <section class="section today-summary">
+                <h3 class="section-title">今日概览</h3>
+                <div class="summary-stats">
+                    <div class="summary-item">
+                        <span class="summary-value" id="today-duration">0</span>
+                        <span class="summary-label">分钟</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-value" id="today-count">0</span>
+                        <span class="summary-label">次</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-value" id="today-sports">-</span>
+                        <span class="summary-label">项目</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 历史记录页面 -->
+        <div id="history-page" class="page">
+            <!-- 日期筛选 -->
+            <div class="filter-bar">
+                <select id="history-filter" class="filter-select">
+                    <option value="day">按日查看</option>
+                    <option value="week">按周查看</option>
+                    <option value="month">按月查看</option>
+                    <option value="all">全部记录</option>
+                </select>
+                <input type="date" id="history-date" class="date-input">
+            </div>
+
+            <!-- 记录列表 -->
+            <div id="history-list" class="history-list">
+                <div class="empty-state">
+                    <p>暂无健身记录</p>
+                    <p class="empty-hint">开始记录您的健身时长吧！</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 统计页面 -->
+        <div id="stats-page" class="page">
+            <!-- 统计周期选择 -->
+            <div class="stats-period-bar">
+                <button class="period-btn active" data-period="week">本周</button>
+                <button class="period-btn" data-period="month">本月</button>
+                <button class="period-btn" data-period="year">今年</button>
+            </div>
+
+            <!-- 总体统计 -->
+            <section class="section stats-summary">
+                <div class="stats-card">
+                    <span class="stats-icon">⏱️</span>
+                    <div class="stats-info">
+                        <span class="stats-value" id="total-duration">0</span>
+                        <span class="stats-unit">分钟</span>
+                    </div>
+                    <span class="stats-label">总时长</span>
+                </div>
+                <div class="stats-card">
+                    <span class="stats-icon">📊</span>
+                    <div class="stats-info">
+                        <span class="stats-value" id="avg-duration">0</span>
+                        <span class="stats-unit">分钟</span>
+                    </div>
+                    <span class="stats-label">日均时长</span>
+                </div>
+                <div class="stats-card">
+                    <span class="stats-icon">🔥</span>
+                    <div class="stats-info">
+                        <span class="stats-value" id="total-count">0</span>
+                        <span class="stats-unit">次</span>
+                    </div>
+                    <span class="stats-label">总次数</span>
+                </div>
+            </section>
+
+            <!-- 项目分布 -->
+            <section class="section">
+                <h3 class="section-title">项目分布</h3>
+                <div class="chart-container">
+                    <canvas id="sport-chart"></canvas>
+                </div>
+            </section>
+
+            <!-- 时长趋势 -->
+            <section class="section">
+                <h3 class="section-title">时长趋势</h3>
+                <div class="chart-container">
+                    <canvas id="trend-chart"></canvas>
+                </div>
+            </section>
+        </div>
+
+        <!-- 导出页面 -->
+        <div id="export-page" class="page">
+            <section class="section">
+                <h3 class="section-title">数据导出</h3>
+                
+                <div class="export-options">
+                    <div class="export-option">
+                        <span class="export-icon">📄</span>
+                        <span class="export-name">导出为 CSV</span>
+                        <button id="export-csv" class="btn btn-primary">导出</button>
+                    </div>
+                    <div class="export-option">
+                        <span class="export-icon">📊</span>
+                        <span class="export-name">导出为 JSON</span>
+                        <button id="export-json" class="btn btn-primary">导出</button>
+                    </div>
+                </div>
+
+                <div class="export-range">
+                    <h4>导出范围</h4>
+                    <div class="range-inputs">
+                        <label>开始日期</label>
+                        <input type="date" id="export-start" class="date-input">
+                        <label>结束日期</label>
+                        <input type="date" id="export-end" class="date-input">
+                    </div>
+                </div>
+            </section>
+
+            <!-- 数据管理 -->
+            <section class="section">
+                <h3 class="section-title">数据管理</h3>
+                <div class="data-actions">
+                    <button id="clear-data" class="btn btn-danger btn-full">清除所有数据</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="fitness.js"></script>
+</body>
+</html>
